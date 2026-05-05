@@ -1,6 +1,6 @@
 # 🔨 Whack-a-Mole
 
-A browser-based Whack-a-Mole game built with ASP.NET Core 9 MVC, Bootstrap 5, and JavaScript.
+Browser-based Whack-a-Mole game built with ASP.NET Core 9 MVC, Bootstrap 5, and JavaScript.
 
 ## How to Play
 - Click **Start Game**
@@ -14,10 +14,8 @@ A browser-based Whack-a-Mole game built with ASP.NET Core 9 MVC, Bootstrap 5, an
 - C#
 
 ## Run Locally
-
 ```bash
 cd WhackAMole
 dotnet run
 ```
-
-Open: **http://localhost:5000**
+Open: http://localhost:5000
