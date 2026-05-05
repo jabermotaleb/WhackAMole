@@ -1,101 +1,45 @@
-@{ ViewData["Title"] = "Whack-a-Mole"; }
+@{
+    ViewData["Title"] = "Whack-a-Mole";
+}
 
-<div class="container py-4">
+<div class="container text-center py-4">
 
-    <!-- Header -->
-    <div class="text-center mb-4">
-        <h1 class="display-5 fw-bold">🔨 Whack-a-Mole</h1>
-        <p class="text-muted">Whack as many moles as you can before time runs out!</p>
-    </div>
+    <h1 class="mb-2">🔨 Whack-a-Mole</h1>
+    <p class="text-muted">Click the moles before they disappear!</p>
 
-    <!-- Stats Bar -->
-    <div class="row g-3 mb-4 justify-content-center">
-        <div class="col-4 col-md-3">
-            <div class="card bg-secondary text-center p-3">
-                <div class="fs-3 fw-bold text-warning" id="scoreDisplay">0</div>
-                <div class="small text-muted">Score</div>
-            </div>
+    <!-- Score and Timer -->
+    <div class="d-flex justify-content-center gap-4 mb-4">
+        <div class="card px-4 py-2">
+            <div class="fw-bold text-muted small">SCORE</div>
+            <div class="fs-3 fw-bold" id="score">0</div>
         </div>
-        <div class="col-4 col-md-3">
-            <div class="card bg-secondary text-center p-3">
-                <div class="fs-3 fw-bold text-info" id="timeDisplay">30</div>
-                <div class="small text-muted">Time</div>
-            </div>
-        </div>
-        <div class="col-4 col-md-3">
-            <div class="card bg-secondary text-center p-3">
-                <div class="fs-3 fw-bold text-success" id="levelDisplay">1</div>
-                <div class="small text-muted">Level</div>
-            </div>
+        <div class="card px-4 py-2">
+            <div class="fw-bold text-muted small">TIME</div>
+            <div class="fs-3 fw-bold" id="timer">30</div>
         </div>
     </div>
 
     <!-- Game Board -->
-    <div class="game-board mx-auto mb-4" id="gameBoard">
-        @for (int i = 0; i < 9; i++)
-        {
-            <div class="hole" id="hole-@i">
-                <div class="mole" id="mole-@i">🐹</div>
-            </div>
-        }
+    <div class="game-board mx-auto mb-4">
+        <div class="hole" id="hole0"><div class="mole" id="mole0" onclick="whack(0)">🐹</div></div>
+        <div class="hole" id="hole1"><div class="mole" id="mole1" onclick="whack(1)">🐹</div></div>
+        <div class="hole" id="hole2"><div class="mole" id="mole2" onclick="whack(2)">🐹</div></div>
+        <div class="hole" id="hole3"><div class="mole" id="mole3" onclick="whack(3)">🐹</div></div>
+        <div class="hole" id="hole4"><div class="mole" id="mole4" onclick="whack(4)">🐹</div></div>
+        <div class="hole" id="hole5"><div class="mole" id="mole5" onclick="whack(5)">🐹</div></div>
+        <div class="hole" id="hole6"><div class="mole" id="mole6" onclick="whack(6)">🐹</div></div>
+        <div class="hole" id="hole7"><div class="mole" id="mole7" onclick="whack(7)">🐹</div></div>
+        <div class="hole" id="hole8"><div class="mole" id="mole8" onclick="whack(8)">🐹</div></div>
     </div>
 
-    <!-- Controls -->
-    <div class="text-center mb-4">
-        <button class="btn btn-success btn-lg px-5 me-2" id="startBtn" onclick="startGame()">
-            <i class="bi bi-play-fill me-2"></i>Start Game
-        </button>
-        <button class="btn btn-outline-light btn-lg" onclick="showLeaderboard()">
-            <i class="bi bi-trophy me-2"></i>Leaderboard
-        </button>
+    <!-- Start Button -->
+    <button class="btn btn-success btn-lg px-5" id="startBtn" onclick="startGame()">Start Game</button>
+
+    <!-- Game Over Message -->
+    <div id="gameOver" class="mt-4" style="display:none">
+        <h3>Game Over!</h3>
+        <p class="fs-5">Your score: <strong id="finalScore">0</strong></p>
+        <button class="btn btn-primary" onclick="startGame()">Play Again</button>
     </div>
 
-    <!-- Difficulty -->
-    <div class="text-center mb-4">
-        <span class="text-muted me-2">Difficulty:</span>
-        <div class="btn-group" id="diffBtns">
-            <button class="btn btn-sm btn-outline-success active" onclick="setDiff('easy',this)">Easy</button>
-            <button class="btn btn-sm btn-outline-warning" onclick="setDiff('medium',this)">Medium</button>
-            <button class="btn btn-sm btn-outline-danger" onclick="setDiff('hard',this)">Hard</button>
-        </div>
-    </div>
-
-    <!-- Leaderboard -->
-    <div class="card bg-secondary mx-auto mb-4" style="max-width:400px;display:none" id="leaderboardCard">
-        <div class="card-header fw-bold"><i class="bi bi-trophy-fill text-warning me-2"></i>Leaderboard</div>
-        <div class="card-body p-0">
-            <table class="table table-dark table-sm mb-0">
-                <thead><tr><th>#</th><th>Name</th><th>Score</th><th>Date</th></tr></thead>
-                <tbody id="leaderboardBody"></tbody>
-            </table>
-            <div class="text-center text-muted p-3" id="noScores" style="display:none">No scores yet. Play a game!</div>
-        </div>
-    </div>
-
-</div>
-
-<!-- Game Over Modal -->
-<div class="modal fade" id="gameOverModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content bg-dark text-white">
-            <div class="modal-header border-secondary">
-                <h5 class="modal-title fw-bold">🎉 Game Over!</h5>
-            </div>
-            <div class="modal-body text-center">
-                <div class="fs-1 fw-bold text-warning mb-2" id="finalScore">0</div>
-                <p class="text-muted mb-3">Enter your name to save your score</p>
-                <input type="text" class="form-control bg-secondary text-white border-secondary text-center mb-3"
-                       id="playerName" placeholder="Your name" maxlength="20" />
-                <div id="rankMsg" class="text-success fw-semibold mb-2" style="display:none"></div>
-            </div>
-            <div class="modal-footer border-secondary justify-content-center">
-                <button class="btn btn-warning px-4" onclick="saveScore()">
-                    <i class="bi bi-save me-2"></i>Save Score
-                </button>
-                <button class="btn btn-outline-light px-4" onclick="playAgain()">
-                    <i class="bi bi-arrow-repeat me-2"></i>Play Again
-                </button>
-            </div>
-        </div>
-    </div>
 </div>

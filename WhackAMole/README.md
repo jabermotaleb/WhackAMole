@@ -1,33 +1,23 @@
-# Whack-a-Mole — ASP.NET Core 9 MVC
+# 🔨 Whack-a-Mole
 
-A browser-based Whack-a-Mole game built with ASP.NET Core 9 MVC and Bootstrap 5.
+A browser-based Whack-a-Mole game built with ASP.NET Core 9 MVC, Bootstrap 5, and JavaScript.
 
-## Features
-- 3x3 mole grid with random spawning
-- 3 difficulty levels (Easy / Medium / Hard)
-- Level progression — speeds up every 10 whacks
-- Bomb moles that deduct points
-- Score popups on each hit
-- Session-based leaderboard (top 10 scores)
-- Game Over modal with name entry and rank display
-- Fully responsive with Bootstrap 5
+## How to Play
+- Click **Start Game**
+- Click the moles before they disappear
+- You have 30 seconds — get as many as you can!
 
 ## Tech Stack
-- **Framework**: ASP.NET Core 9 MVC
-- **Session**: ASP.NET Core Session (leaderboard storage)
-- **UI**: Bootstrap 5.3 + Bootstrap Icons (CDN)
-- **Game Logic**: Vanilla JavaScript
+- ASP.NET Core 9 MVC
+- Bootstrap 5
+- JavaScript
+- C#
 
 ## Run Locally
 
 ```bash
 cd WhackAMole
-"C:\Program Files\dotnet\dotnet.exe" run
+dotnet run
 ```
 
 Open: **http://localhost:5000**
-
-## Resume Bullet Points
-- Built a browser-based game using ASP.NET Core 9 MVC with server-side session management for a real-time leaderboard
-- Implemented game logic in JavaScript with dynamic difficulty scaling, level progression, and animated UI feedback
-- Used Bootstrap 5 for a fully responsive layout with modals, cards, and custom CSS animations
